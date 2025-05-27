@@ -46,15 +46,33 @@ fi
 # Enter the llvm-project directory
 cd llvm-project || exit 1
 
-# Check if sparse checkout is already set to "llvm"
+# Check if sparse checkouts are set
+
 SPARSE_LIST=$(git sparse-checkout list 2>/dev/null | grep '^llvm$')
 
+# llvm
 if [ -z "$SPARSE_LIST" ]; then
   echo "Configuring sparse checkout for 'llvm'..."
   git sparse-checkout init --cone
   git sparse-checkout set llvm
 else
   echo "Sparse checkout already includes 'llvm', skipping."
+fi
+
+# cmake
+if ! echo "$SPARSE_LIST" | grep -q '^cmake$'; then
+  echo "[INFO] Adding 'cmake' directory to sparse checkout..."
+  git sparse-checkout add cmake
+else
+  echo "[INFO] 'cmake' already included."
+fi
+
+# third-party
+if ! echo "$SPARSE_LIST" | grep -q '^third-party$'; then
+  echo "[INFO] Adding 'third-party' directory to sparse checkout..."
+  git sparse-checkout add third-party
+else
+  echo "[INFO] 'third-party' already included."
 fi
 
 echo "[SUCCESS] LLVM sparse checkout is ready."
