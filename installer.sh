@@ -43,36 +43,35 @@ else
   echo "llvm-project directory already exists, skipping clone."
 fi
 
-# Enter the llvm-project directory
 cd llvm-project || exit 1
 
-# Check if sparse checkouts are set
-
-SPARSE_LIST=$(git sparse-checkout list 2>/dev/null | grep '^llvm$')
-
-# llvm
-if [ -z "$SPARSE_LIST" ]; then
-  echo "Configuring sparse checkout for 'llvm'..."
+# Init sparse checkout if needed
+if [ ! -d ".git/info/sparse-checkout" ] && [ ! -f ".git/info/sparse-checkout" ]; then
   git sparse-checkout init --cone
-  git sparse-checkout set llvm
-else
-  echo "Sparse checkout already includes 'llvm', skipping."
 fi
 
-# cmake
-if ! echo "$SPARSE_LIST" | grep -q '^cmake$'; then
-  echo "[INFO] Adding 'cmake' directory to sparse checkout..."
-  git sparse-checkout add cmake
-else
-  echo "[INFO] 'cmake' already included."
-fi
+# Get current sparse list
+SPARSE_LIST=$(git sparse-checkout list 2>/dev/null)
 
-# third-party
-if ! echo "$SPARSE_LIST" | grep -q '^third-party$'; then
-  echo "[INFO] Adding 'third-party' directory to sparse checkout..."
-  git sparse-checkout add third-party
-else
-  echo "[INFO] 'third-party' already included."
-fi
+# Ensure directories exist
+add_sparse_dir() {
+  local dir="$1"
+  if ! echo "$SPARSE_LIST" | grep -qx "$dir"; then
+    echo "[INFO] Adding '$dir' to sparse checkout..."
+    git sparse-checkout add "$dir"
+  else
+    echo "[INFO] '$dir' already included."
+  fi
+}
+
+REQUIRED_DIRS=(
+  "llvm"
+  "cmake"
+  "third-party"
+)
+
+for dir in "${REQUIRED_DIRS[@]}"; do
+  add_sparse_dir "$dir"
+done
 
 echo "[SUCCESS] LLVM sparse checkout is ready."
