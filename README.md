@@ -6,6 +6,7 @@ A project among 5 friends to build a compiler using LLVM, named after the compil
 ## Prerequisites
 - A working installation of **WSL** (Windows Subsystem for Linux) using an Ubuntu distribution (20.04 or later recommended)
 - A terminal inside WSL with internet access
+
 (This guide assumes a WSL + Ubuntu environment. You can adapt it to native Ubuntu or other Linux distributions, but some paths and dependencies may differ.)
 
 ### Step 0: Clone the Repository
