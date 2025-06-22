@@ -47,3 +47,13 @@ A project among 5 friends to build a compiler using LLVM, named after the compil
    ```bash
    Successfully created LLVM module!
    ```
+
+# Building and Running "Language"
+1. Run the build script
+   ```bash
+   ./build.sh
+   ``` 
+2. Run the executable with
+   ```bash
+   ./bin/language
+   ``` 
