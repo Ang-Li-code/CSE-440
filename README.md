@@ -11,26 +11,22 @@ A project among 5 friends to build a compiler using LLVM, named after the compil
 
 ### Step 0: Clone the Repository
 
-1. Open a WSL terminal (Ubuntu)
-2. Clone the repository and navigate to the `installation` folder:
+1. Open your favorite terminal
+2. Clone the repository with:
    ```bash
    git clone https://github.com/Ang-Li-code/CSE-440.git
-   cd CSE-440/installation
+   cd CSE-440
    ```
 
 ### Step 1: Install LLVM Locally
 
-1. Open a WSL terminal (Ubuntu)
-2. Nagivate to the "installation" directory
-3. Make the install script executable:
+1. Open your favorite terminal, if it's not already open
+2. Run the install script:
    ```bash
-   chmod +x install.sh
+   ./install.sh [num]
    ```
-4. Run the script:
-   ```bash
-   ./install.sh
-   ```
-5. This will:
+   - Optionally pass in a number for the cores to be used ($<25$% of your CPU cores is recommeneded). By default ninja will use as many resources as they see fit, however this can sometimes take up too much RAM and terminate compilation.
+3. This will:
    - Install required packages
    - Download and extract LLVM 17.0.6 source code
    - Build and install LLVM and Clang to `~/llvm-install`
@@ -38,20 +34,16 @@ A project among 5 friends to build a compiler using LLVM, named after the compil
    
 ### Step 2: Test LLVM with a Simple Program
 
-1. Open a new WSL terminal (to pick up updated environment variables)
-2. Navigate back to the installation directory:
+1. Open a new terminal instance (to pick up updated environment variables)
+2. Navigate back to the tests directory:
    ```bash
-   cd CSE-440/installation
+   cd CSE-440/tests
    ```
-3. Make the test script executable:
+3. Run the sample program script (this will create a test file, and link with llvm to ensure everything is working):
    ```bash
-   chmod +x test.sh
+   ./sampleProgram.sh
    ```
-4. Run the script:
-   ```bash
-   ./test.sh
-   ```
-5. If successful, you will see:
+4. If successful, you will see:
    ```bash
    Successfully created LLVM module!
    ```
