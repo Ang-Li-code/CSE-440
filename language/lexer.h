@@ -27,13 +27,15 @@ public:
     // identifier: [a-zA-Z][a-zA-Z0-9]*
     if (std::isalpha(LastChar)) 
     { 
-      tok.value = LastChar;
-      while (std::isalnum((LastChar = std::getchar())))
-        tok.value += LastChar;
+      std::string identifier(1, LastChar);
+      while (std::isalnum((LastChar = std::getchar()))) {
+          identifier += LastChar;
+      }
+      tok.value = std::move(identifier);
 
-      if (tok.value == "def")
+      if (std::get<std::string>(tok.value) == "def")
         tok.type = TokenId::DEF;
-      else if (tok.value == "extern")
+      else if (std::get<std::string>(tok.value) == "extern")
         tok.type = TokenId::EXTERN;
       else 
         tok.type = TokenId::IDENTIFIER;
@@ -50,14 +52,15 @@ public:
       do {
         LastChar = getchar();
       } while (LastChar != EOF && LastChar != '\n' && LastChar != '\r');
-
+      
+      // try grabbing the next token if it's not EOF
       if (LastChar != EOF)
-        return gettok();
+        return getToken();
+    } else if (isOperator( LastChar ) ) {
+      tok.type = TokenId::OPERATOR;
+      tok.value = std::to_string(LastChar);
     } else if (LastChar == EOF) {
-      return TokenId::END_OF_FILE;
-    } else if (isOperator( lastChar) ) {
-      tok.type == TokenId::OPERATOR;
-      tok.value = std::to_string(lastChar);
+      tok.type = TokenId::END_OF_FILE;
     }
 
     return tok;

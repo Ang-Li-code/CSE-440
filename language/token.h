@@ -13,7 +13,7 @@ namespace language
 {
 
 bool isOperator( char c ) {
-  if c == '+' || c == '-' || c == '*' || c == "/";
+  return c == '+' || c == '-' || c == '*' || c == '/';
 }
 
 enum class TokenId: u8 {
