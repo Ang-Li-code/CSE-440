@@ -29,8 +29,11 @@ enum class TokenId: u8 {
   OPERATOR,
 };
 
+// Use this function as a wrapper around std::variant::index() for checking what value a token holds.
+// Ideally the value of a token is always apart of the token so this is unnecessary, 
+// but just in case this will keep the code a little cleaner.
 template<TokenId primary>
-bool isPrimary(const std::variant<std::string, double>& value) {
+inline bool isPrimary(const std::variant<std::string, double>& value) {
     static_assert(primary >= TokenId::IDENTIFIER,
                   "primary must be >= TokenId::IDENTIFIER");
     constexpr const size_t tokenIndex = static_cast<size_t>(static_cast<u8>(primary) - 
