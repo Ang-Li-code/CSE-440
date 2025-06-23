@@ -12,6 +12,10 @@
 namespace language
 {
 
+bool isOperator( char c ) {
+  if c == '+' || c == '-' || c == '*' || c == "/";
+}
+
 enum class TokenId: u8 {
   END_OF_FILE = 0,
 
@@ -22,6 +26,7 @@ enum class TokenId: u8 {
   // primary
   IDENTIFIER,
   NUMBER,
+  OPERATOR,
 };
 
 template<TokenId primary>
