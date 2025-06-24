@@ -14,7 +14,16 @@ class lexer
 public:
   lexer() = default;
 
-  token getToken() 
+  token getToken() const {
+    return mTok;
+  }
+
+  token getNextToken() {
+    return mTok = getNextTokenImpl();
+  }
+
+private:
+  token getNextTokenImpl() 
   {
     static int LastChar = ' ';
     token tok;
@@ -59,12 +68,20 @@ public:
     } else if (isOperator( LastChar ) ) {
       tok.type = TokenId::OPERATOR;
       tok.value = std::to_string(LastChar);
-    } else if (LastChar == EOF) {
+    } else if (LastChar == '(') {
+      tok.type = TokenId::LPAREN;
+    } else if (LastChar == ')') {
+      tok.type = TokenId::RPAREN;
+    } else if (LastChar == ',') {
+      tok.type = TokenId::COMMA;
+    }else if (LastChar == EOF) {
       tok.type = TokenId::END_OF_FILE;
     }
 
     return tok;
   }
+private:
+  token mTok;
 };
 
 }

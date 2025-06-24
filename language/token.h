@@ -12,6 +12,14 @@
 namespace language
 {
 
+enum class Operator: u8 {
+  nop = 0,
+  plus,
+  sub,
+  mult,
+  div,
+};
+
 bool isOperator( char c ) {
   return c == '+' || c == '-' || c == '*' || c == '/';
 }
@@ -23,10 +31,15 @@ enum class TokenId: u8 {
   DEF,
   EXTERN,
 
+  // secondary
+  OPERATOR,
+  LPAREN,
+  RPAREN,
+  COMMA,
+
   // primary
   IDENTIFIER,
   NUMBER,
-  OPERATOR,
 };
 
 // Use this function as a wrapper around std::variant::index() for checking what value a token holds.
