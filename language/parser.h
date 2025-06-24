@@ -55,7 +55,7 @@ private:
     }
 
     // call a function
-    mLex.getNextToken();; 
+    mLex.getNextToken();
     std::vector<std::unique_ptr<ExprAST>> args;
     if(mLex.getToken().type != TokenId::RPAREN) {
       // parse a list of arguments
